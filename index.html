@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI CDSS</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            margin: 60px auto;
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        select {
+            margin: 8px;
+            padding: 8px;
+            width: 85%;
+        }
+
+        button {
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 85%;
+        }
+
+        button:hover {
+            background: darkblue;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Clinical Decision Support System</h1>
+
+    <select id="fever">
+        <option value="">Fever</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <select id="cough">
+        <option value="">Cough</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <select id="fatigue">
+        <option value="">Fatigue</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <select id="headache">
+        <option value="">Headache</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <button onclick="predict()">Predict</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function predict() {
+    let fever = document.getElementById("fever").value;
+    let cough = document.getElementById("cough").value;
+    let fatigue = document.getElementById("fatigue").value;
+    let headache = document.getElementById("headache").value;
+
+    if (fever === "" || cough === "" || fatigue === "" || headache === "") {
+        document.getElementById("result").innerHTML = "Please select all fields!";
+        return;
+    }
+
+    fever = parseInt(fever);
+    cough = parseInt(cough);
+    fatigue = parseInt(fatigue);
+    headache = parseInt(headache);
+
+    let disease = "";
+
+    if (fever && cough && fatigue) {
+        disease = "Flu";
+    } else if (fever && headache && !cough) {
+        disease = "Malaria";
+    } else if (cough && headache && !fever) {
+        disease = "Cold";
+    } else if (fatigue && !fever && !cough) {
+        disease = "Diabetes";
+    } else {
+        disease = "Unknown / Consult Doctor";
+    }
+
+    document.getElementById("result").innerHTML = "Predicted Disease: " + disease;
+}
+</script>
+
+</body>
+</html>
